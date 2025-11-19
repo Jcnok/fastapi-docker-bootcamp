@@ -1,13 +1,5 @@
 **Descrição do PR:**
-Endpoints Rest da API para gerenciar uma lista de tarefas (To-Do List) usando FastAPI.
-Ao testar localmente pode utilizar essa [Collection](https://www.postman.com/gold-space-360687/workspace/dio-apis/collection/6437985-21261e45-3ad6-4f69-8df6-1a92f2f8d3df?action=share&creator=6437985) do Postman. 
-
-- [Post] Criar Tarefa
-- [Get] Busca Tarefas
-- [Get] Tarefa por ID
-- [Put] Atualiza Tarefa
-- [Delete] Apaga Tarefa
-
+Este PR adiciona diversas melhorias importantes ao projeto, incluindo paginação no endpoint GET /tasks, implementação de testes automatizados com Pytest, validações avançadas com Pydantic v2, reorganização da estrutura do projeto e também foram adicionados limites máximos de caracteres para título e descrição, além de um validador para impedir títulos vazios ou compostos apenas por espaços.
 
 **Tipo de mudança:**
 - [x] Nova feature
@@ -22,5 +14,5 @@ Ao testar localmente pode utilizar essa [Collection](https://www.postman.com/gol
 - [x] Adicionou seu nome como participante
 
 **Relacionado a alguma issue?**
-Closes #6
+Closes #3
 
