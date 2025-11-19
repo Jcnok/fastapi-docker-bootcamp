@@ -11,3 +11,7 @@ docker run -d -p 8000:8000 fastapi-bootcamp
 - Combine atividades via issues ou discussões
 ## Participantes
 Adicione seu nome na lista conforme contribuir!
+
+https://github.com/Jcnok
+
+https://github.com/goncasthiago
