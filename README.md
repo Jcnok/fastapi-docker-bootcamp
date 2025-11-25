@@ -139,10 +139,12 @@ git commit -m "feat: minha feature"
 git push origin feat/minha-feature
 ```
 **5.** Abra um Pull Request.
+
+## Participantes
 - Faça fork e branch
 - Crie issues para sugestões e bugs
 - Combine atividades via issues ou discussões
-## Participantes
+
 Adicione seu nome na lista conforme contribuir!
 
 https://github.com/Jcnok
