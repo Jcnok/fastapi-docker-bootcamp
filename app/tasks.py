@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from datetime import datetime # Importar para usar no campo de data/hora
-from .database import Base # Importa sua Base declarativa
+from datetime import datetime
+from .database import Base # Importa a Base declarativa do app/database.py
 
 # --- MODELO USER (Atualizado com Senha e Relacionamento) ---
 
@@ -17,8 +17,7 @@ class User(Base):
     # Permite acessar user.tasks (lista de objetos Task)
     tasks = relationship("Task", back_populates="owner") 
 
-
-# --- NOVO MODELO TASK (A TAREFA) ---
+# --- MODELO TASK (A TAREFA) ---
 
 class Task(Base):
     __tablename__ = 'tasks'
