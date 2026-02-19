@@ -1,156 +1,209 @@
-# To-Do List API (FastAPI)
-Uma API simples para gerenciar tarefas (CRUD) construída com FastAPI.
+# 📘 FastAPI + Docker Bootcamp
 
-![FastAPI](https://img.shields.io/badge/FastAPI-0.104-blue)
-![Tests](https://img.shields.io/badge/tests-passing-brightgreen)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+Projeto colaborativo para aplicar conceitos de API RESTful, FastAPI, Python, Docker e boas práticas de desenvolvimento.
 
----
+## 🚀 Funcionalidades Implementadas
 
-##  Requisitos
-- Python 3.10+
-- pip
-- (Opcional) Docker e Docker Compose
+### ✔ Paginação no endpoint GET /tasks
 
----
+Suporte a ```skip``` e ```limit```
 
-## Instalação
+Retorno com total, itens e metadados
 
-```bash
-python -m venv .venv
-source .venv/bin/activate     # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-```
+Exemplo de resposta:
 
----
-
-## Executando o Projeto
-```bash
-uvicorn app.main:app --reload
-```
-
-**Acesse:**
-- Swagger UI → http://localhost:8000/docs
-- ReDoc → http://localhost:8000/redoc
-
-  
----
-
-## Endpoints
-
-### Criar tarefa
-
-- **POST** `/todos/`
-
-**Body exemplo:**
 ```json
 {
-  "title": "Estudar FastAPI",
-  "description": "Completar bootcamp",
+  "total": 0,
+  "skip": 0,
+  "limit": 10,
+  "items": []
+} 
+```
+
+### ✔ CRUD de Tarefas (Tasks)
+
+Criar tarefas
+
+Listar tarefas (paginado)
+
+Buscar tarefa por ID
+
+Deletar tarefa
+
+Validações completas com Pydantic v2
+
+### 🧪 Testes Automatizados (Pytest)
+
+Testes para GET, POST, DELETE
+
+TestClient simulando requisições HTTP reais
+
+Arquivo pytest.ini configurando o ambiente corretamente
+
+Testes separados em tests/
+
+### 🛡️ Validações (Pydantic v2)
+
+Título: máximo de 100 caracteres
+
+Descrição: máximo de 500 caracteres
+
+Validador que remove espaços no início e fim
+
+Erro se o título for vazio ou composto apenas de espaços
+
+Uso correto de ConfigDict (Pydantic v2)
+
+### 📂 Organização do Projeto
+
+```
+app/
+ ├── main.py
+ ├── models/
+ │    └── models.py
+ └── routers/
+tests/
+ └── system_test.py
+pytest.ini
+Dockerfile
+README.md
+```
+
+## 🌐 API Desenvolvida
+
+A API implementa um CRUD simples de tarefas (“Tasks”).
+
+### 📌 Endpoints
+
+### GET /
+
+Retorna informações gerais (ex.: status inicial).
+
+### GET /tasks
+
+Lista tarefas com paginação.
+
+Parâmetros Query:
+
+```skip``` : inteiro — padrão 0
+
+```limit``` : inteiro — padrão 10
+
+Exemplo:
+```
+GET /tasks?skip=0&limit=10
+
+GET /tasks/{task_id}
+```
+Busca uma tarefa pelo ID.
+
+Exemplo:
+```
+GET /tasks/1
+```
+
+### POST /tasks
+
+
+Cria uma nova tarefa.
+
+Body : 
+
+```json
+{
+  "title": "Aprender FastAPI",
+  "description": "Estudar FastAPI e Docker",
   "completed": false
 }
 ```
 
-**Exemplo curl:**
-```bash
-curl -X POST "http://localhost:8000/todos/" \
-  -H "Content-Type: application/json" \
-  -d '{"title": "Estudar FastAPI", "description": "Completar bootcamp", "completed": false}'
+Validações:
+
+-```title``` obrigatório
+
+- Máximo 100 caracteres
+
+- Não pode ser vazio ou só espaços
+
+- ```description``` opcional, máximo 500 caracteres
+
+- ```completed``` booleano
+
+### DELETE /tasks/{task_id}
+
+Remove uma tarefa existente.
+
+Retorna:
+
+- 204 No Content se excluída
+
+- 404 se não existir
+
+## ▶️ Como rodar o projeto localmente
+
+🔧 1. Com Uvicorn (sem Docker)
+Criar ambiente virtual
+```
+python -m venv venv
+```
+Ativar:
+
+Windows:
+
+```
+venv\Scripts\activate
 ```
 
-### Listar tarefas
-
-- **GET** `/todos/?skip=0&limit=100`
-- **Suporta query params:** `skip` (>=0), `limit` (1-1000)
-```bash
-curl "http://localhost:8000/todos/?skip=0&limit=100"
+Linux/Mac:
+```
+source venv/bin/activate
 ```
 
-### Buscar tarefa por ID
-
-- **GET** `/todos/{id}`
-```bash
-curl "http://localhost:8000/todos/1"
+2. Instalar dependências
 ```
-  
-### Atualizar tarefa
-- **PUT** `/todos/{id}`
-
-**Body parcial ou total:**
-```json
-{
-  "title": "Novo título",
-  "completed": true
-}
-```
-```bash
-curl -X PUT "http://localhost:8000/todos/1" \
- -H "Content-Type: application/json" \
- -d '{"completed": true}'
+pip install -r requirements.txt
 ```
 
-### Deletar tarefa
+Rodar o servidor localmente
 
-**DELETE** `/todos/{id}`
-```bash
-curl -X DELETE "http://localhost:8000/todos/1"
+```
+uvicorn app.main:app --reload
 ```
 
-## Testes
-```bash
-pytest -v
+Acesse:
+
+http://127.0.0.1:8000
+
+Documentação Swagger: http://127.0.0.1:8000/docs
+
+Redoc: http://127.0.0.1:8000/redoc
+
+## 🐳 Rodar com Docker
+
+Build
+```
+docker build -t fastapi-bootcamp .
+```
+Run
+```
+docker run -d -p 8000:8000 fastapi-bootcamp
 ```
 
-## Estrutura do Projeto
-```txt
-app/
- ├── main.py
- ├── models/
- │   └── todo.py
- └── routes/
-     └── todos.py
-```
+## 🤝 Contribuição
 
----
+Faça fork e crie uma branch por feature
 
-## Boas Práticas e Dicas
-- Use a documentação automática do FastAPI em `/docs` para testar rapidamente.
-- Mensagens de erro estão em PT-BR e usam os status HTTP corretos (201, 404, 422, 204).
-- Para persistência real, troque o banco em memória por um banco SQL (SQLite/PostgreSQL).
+Abra issues para melhorias, bugs e dúvidas
 
-## Roadmap
-- Persistência com banco de dados
-- Autenticação e autorização (JWT)
-- Paginação e filtros avançados
+Combine tarefas via issues/discussões
 
-## Contribuição
-**1.** Faça um fork do repositório
+Atualize o README ao concluir funcionalidades
 
-**2.** Crie uma branch:
-```bash
-git checkout -b feat/minha-feature
-```
-**3.** Commit:
-```bash
-git commit -m "feat: minha feature"
-```
-**4.** Push:
-```bash
-git push origin feat/minha-feature
-```
-**5.** Abra um Pull Request.
+## 👥 Participantes
 
-## Participantes
-- Faça fork e branch
-- Crie issues para sugestões e bugs
-- Combine atividades via issues ou discussões
+Adicione seu nome ao contribuir!
 
-Adicione seu nome na lista conforme contribuir!
+Julio Okuda - [https://github.com/Jcnok](https://github.com/Jcnok)
 
-https://github.com/Jcnok
-
-https://github.com/goncasthiago
-
-https://github.com/Fernando599
-
-https://github.com/Michelleyxz
+Thiago Debia - [https://github.com/goncasthiago](https://github.com/goncasthiago)

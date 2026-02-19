@@ -1,5 +1,5 @@
 from typing import List, Optional
-from app.models import Task
+from app.models.models import Task
 from datetime import datetime
 
 # Simulando um banco de dados com lista em memória

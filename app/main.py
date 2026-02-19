@@ -1,7 +1,7 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Query
 from typing import List
-from app.models import Task
-from app import database
+from app.models.models import Task
+from app.models import database
 
 app = FastAPI(
     title="To-Do List API",
@@ -9,13 +9,20 @@ app = FastAPI(
     version="1.0.0"
 )
 
-@app.get("/", tags=["Root"])
-def read_root():
-    """Endpoint raiz da API"""
+@app.get("/", tags=["Tasks"])
+async def get_paginated(
+    skip: int = Query(0, ge=0, description="Quantidade a pular (>=0)"),
+    limit: int = Query(10, ge=1, le=1000, description="Quantidade a retornar (1-1000)"),
+):
+    """Busca paginada das tarefas"""
+    
+    tasks = database.get_all_tasks()
+    
     return {
-        "message": "Bem-vindo à To-Do List API!",
-        "docs": "/docs",
-        "redoc": "/redoc"
+        "total": len(tasks),
+        "skip": skip,
+        "limit": limit,
+        "items": tasks[skip: skip + limit]
     }
 
 # CREATE - Criar nova tarefa
@@ -61,6 +68,7 @@ def get_task(task_id: int):
     response_model=Task,
     tags=["Tasks"]
 )
+
 def update_task(task_id: int, task: Task):
     """Atualiza uma tarefa existente"""
     updated = database.update_task(task_id, task)
