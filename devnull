@@ -1,0 +1,2 @@
+mv: cannot move 'fastapi-docker-bootcamp/.git' to './.git': Directory not empty
+mv: cannot move 'fastapi-docker-bootcamp/.github' to './.github': Directory not empty
