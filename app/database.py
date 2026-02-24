@@ -1,6 +1,12 @@
+<<<<<<< HEAD:app/database.py
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+=======
+from typing import List, Optional
+from app.models.models import Task
+from datetime import datetime
+>>>>>>> upstream/main:app/models/database.py
 
 # Configuração Padrão do SQLite
 DATABASE_URL = "sqlite:///./teste.db" 
